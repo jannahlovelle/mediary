@@ -1,4 +1,4 @@
-package com.guardea.demo.Security;
+package com.guardea.demo.Auth;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

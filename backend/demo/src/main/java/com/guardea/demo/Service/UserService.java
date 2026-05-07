@@ -14,17 +14,20 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public User registerUser(User user) {
-        // 1. Scramble the password
-        user.setPassword(encoder.encode(user.getPassword()));
-        
-        // 2. Default logic: If it's a student, ensure they have a studentId
-        // You can add validation here later
-        
-        return userRepository.save(user);
+     public User registerUser(User user) {
+    // 1. Check if email already exists
+    if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        // You can create a custom exception, or just throw a RuntimeException
+        throw new RuntimeException("Email is already registered!");
     }
 
+    // 2. Hash the password and save
+    user.setPassword(encoder.encode(user.getPassword()));
+    return userRepository.save(user);
+}
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
+
+   
 }
